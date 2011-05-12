@@ -38,4 +38,8 @@ $lang['ext_contact.mobile_label']='Mobile';
 $lang['ext_contact.fax_label']='Fax';
 $lang['ext_contact.town_city_label']='Town / City';
 $lang['ext_contact.street_address_label']='Street Address';
+
+//Admin Hints
+$lang['ext_contact.subject_hint']='This value is what will be sent with the user email as it\'s subject e.g \'communication from mysite\'.';
+$lang['ext_contact.emailto_hint']='Where the user communication will be sent. e.g \'info@mysite.com\'';
 ?>

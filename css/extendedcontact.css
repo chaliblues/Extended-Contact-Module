@@ -1,4 +1,30 @@
-
+/* forms */
+fieldset {
+	border: 0;
+}
+label { 
+	display: block;
+	color: #444;
+	padding: 0 0 2px;
+}
+input.text, textarea.text {
+	width: 250px;
+	padding: 5px;
+	border: 0;
+	border: 1px solid #ddd;
+	margin: 0 0 3px;
+}
+textarea.text  {
+	width: 400px;
+	height: 120px;
+}
+input.submit {
+	color: #fff;
+	padding: 7px 10px;
+	border: 0;
+	font-weight: bold;
+	background: #777;
+}
 .error-box{
 	color:red;
 }
