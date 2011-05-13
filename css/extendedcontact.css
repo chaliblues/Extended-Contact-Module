@@ -1,3 +1,30 @@
+/*Sent message*/
+#sent{
+	color:green;
+	font-weight: bold;
+	font-size: 17px;
+	
+}
+/*Contact info list*/
+ul.contact{
+	margin:0;
+	padding:0;
+	
+}
+ul.contact li{
+	margin:0;
+	padding:2px 0 2px 0px;
+	list-style: none;
+}
+
+#label
+{
+	font-weight: bold;
+}
+.clear{
+	margin-bottom: 15px;
+}
+
 /* forms */
 fieldset {
 	border: 0;

@@ -37,7 +37,7 @@ class ExtendedContact extends Public_Controller{
 	public function __construct()
 	{
 		parent::__construct();
-		
+		$this->load->model('extendedcontact_m');
 		$this->load->library('form_validation');
 		$this->lang->load('ext_contact');
 	}
@@ -45,46 +45,56 @@ class ExtendedContact extends Public_Controller{
 	//Default function that loads the contact form
 	public function index()
 	{
-		$data['message']='Form goes here';
+		$data['contact_info']=$this->extendedcontact_m->get_contacts_settings();
 		
 		//load the form template
-		$this->template->build('form_v',$data);
+		$this->template
+		->append_metadata( css('extendedcontact.css', 'extendedcontact') )
+		->build('form_v',$data);
 	}
 	
 	//Function to handle submit
 	public function sendc()
 	{
+		$data['contact_info']=$this->extendedcontact_m->get_contacts_settings();
 		$this->form_validation->set_rules($this->contact_validation_rules);
 		
+		$contact=$data['contact_info'];
 		if($this->form_validation->run())
 		{
 			$name=$this->input->post('name');
 			$email=$this->input->post('email');
 			$phone=$this->input->post('phone');
-			$message=$this->input->post('message');
+			$message=$this->input->post('text');
 			
 			$this->load->library('email');
 
             $this->email->from($email, $name);
-            $this->email->to('someone@example.com'); 
+            $this->email->to($contact->emailto); 
             
-            $this->email->subject('Communication from website');
-            $this->email->message('Testing the email class.');	
+            $this->email->subject($contact->subject);
+            $this->email->message($message);	
 
-            $this->email->send();
+            @$this->email->send();//suppress the email errors
+            
+            //success
+			$this->session->set_flashdata('success', lang('ext_contact.success_sent'));
+			
+            redirect(current_url());
 
 		}
-		
-		// Set the values for the form inputs
-		foreach ($this->contact_validation_rules as $rule)
+		else
 		{
-			$form_values->{$rule['field']} = set_value($rule['field']);
+			$this->template
+		         ->append_metadata( css('extendedcontact.css', 'extendedcontact') )
+		         ->build('form_v',$data);
 		}
-	
-		$this->template
-		->append_metadata( css('extendedcontact.css', 'extendedcontact') )
-		->build('form_v',$form_values);
+	    
+	    
+		
 	}
+	
+	
 }
 
 ?>

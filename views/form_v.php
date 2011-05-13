@@ -1,4 +1,51 @@
 <h2 class="inner"><?php echo lang('ext_contact.title');?></h2>
+
+<?php
+  
+ echo '<div id="sent">'.$this->session->flashdata('success').'</div>';
+ if($contact_info==NULL)
+ {
+    //No contact info 
+ }
+ else
+ {
+    echo '<ul class="contact">';
+        $row=$contact_info;
+		if($row->postal_zip!=NULL)
+		{
+			echo '<li><span id="label">'.lang('ext_contact.address_label').':</span> '.$row->postal_zip.'</li>';
+		}
+		if($row->email!=NULL)
+		{
+			echo '<li><span id="label">'.lang('ext_contact.email_label').':</span> '.$row->email.'</li>';
+		}
+		if($row->tel!=NULL)
+		{
+			echo '<li><span id="label">'.lang('ext_contact.tel_label').':</span> '.$row->tel.'</li>';
+		}
+		if($row->mobile!=NULL)
+		{
+			echo '<li><span id="label">'.lang('ext_contact.mobile_label').':</span> '.$row->mobile.'</li>';
+		}
+		if($row->fax!=NULL)
+		{
+			echo '<li><span id="label">'.lang('ext_contact.fax_label').':</span> '.$row->fax.'</li>';
+		}
+		if($row->town_city!=NULL)
+		{
+			echo '<li><span id="label">'.lang('ext_contact.town_city_label').':</span> '.$row->town_city.'</li>';
+		}
+		if($row->street_address!=NULL)
+		{
+			echo '<li><span id="label">'.lang('ext_contact.streetaddress_label').':</span> '.$row->street_address.'</li>';
+		}
+		
+		
+	
+	echo '</ul><hr/><div class="clear"></div>';
+ }
+?>
+
 <?php if (validation_errors()): ?>
 <div class="error-box">
 	<?php echo validation_errors();?>

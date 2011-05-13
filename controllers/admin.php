@@ -64,6 +64,7 @@ class Admin extends Admin_Controller
 	{
 		parent::__construct();
 		//load language file
+		$this->load->model('extendedcontact_m');
 		$this->lang->load('ext_contact');
 		$this->load->library('form_validation');
 		$this->template->set_partial('shortcuts','admin/partials/shortcuts');
@@ -73,7 +74,8 @@ class Admin extends Admin_Controller
 	//default action
 	public function index()
 	{
-		$data['welcome']='welcome message';
+		
+		$data['contact_info']=$this->extendedcontact_m->get_contacts_settings();
 		
 		$this->template
 		              ->append_metadata(css('extendedcontact.css','extendedcontact'))
@@ -100,13 +102,31 @@ class Admin extends Admin_Controller
 			$town_city=$this->input->post('town_city');
 			$street_address=$this->input->post('street');
 			
+			$result=$this->extendedcontact_m->update_settings($subject,$emailto,$postalzip,$email,$tel,$mobile,$fax,$town_city,$street_address);
+			
+			if($result==1)
+			{
+				//success
+				$this->session->set_flashdata('success', lang('ext_contact.success_settings'));
+				redirect(current_url());
+			}
+			else
+			{
+				//error occurred
+				$this->session->set_flashdata('error', lang('ext_contact.error_settings'));
+		        redirect(current_url());
+			}
+			
 			
 		}
 		
+		$data['contact_info']=$this->extendedcontact_m->get_contacts_settings();
+		
 		$this->template
 		              ->append_metadata(css('extendedcontact.css','extendedcontact'))
-		              ->build('admin/index_v');
+		              ->build('admin/index_v',$data);
 	}
+	
 }
 
 
